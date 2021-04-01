@@ -12,11 +12,91 @@
 		
 		<link rel="stylesheet" href="styles/main.css" type="text/css"/>
 		<link rel="stylesheet" href="styles/usefulDefs.css" type="text/css"/>
-		<link rel="stylesheet" href="styles/imageSlider.css" type="text/css"/>
 		<script src="scripts/usefulStuff.js"></script>
 		<script src="scripts/navLinks.js"></script>
-		<script src="scripts/imageSizeScroll.js"></script>
-		<script src="scripts/imageSlider.js"></script>
+		
+		<style>
+			body {
+				background: #EEE;
+			}
+			.main {
+				text-align: center;
+			}
+			
+			input, button {
+				display: block;
+			}
+			#yes {
+				background: #EEE;
+				box-shadow: 5px 5px 15px #FFF, -5px -5px 15px #CCC;
+				width: 300px;
+				height: 400px;
+				margin: auto;
+				position: absolute;
+				left: 0;
+				right: 0;
+				top: 0;
+				bottom: 0;
+				text-align: center;
+			}
+			#yes > div {
+				position: relative;
+				width: 100%;
+			}
+			#yes > div * {
+				font-size: 20px;
+				margin: 10px auto;
+			}
+			#ericCui {
+				border-radius: 5px;
+				background: white;
+				text-align: center;
+				padding: 10px;
+			}
+			.hidden {
+				display: none !important;
+			}
+			#hallo {
+				margin: 0;
+				padding: 0;
+				width: 100%;
+				height: 100%;
+				position: absolute;
+				left: 0;
+				top: 0;
+				z-index: 5;
+			}
+			#vid {
+				width: 100%;
+				height: 100%;
+				position: absolute;
+				left: 0;
+				top: 0;
+				z-index: 1;
+			}
+			#text {
+				padding: 10px;
+				z-index: 2 !important;
+				position: absolute;
+				left: 20%;
+				top: 200px;
+				/*border: 1px solid black;*/
+				border-radius: 20px;
+				width: 60%;
+				text-align: center;
+				background: rgba(0, 0, 0, 0.2);
+				box-shadow: 0 0 10px #000;
+			}
+			
+			@keyframes rainbow {
+				from, to {
+					opacity: 0%;
+				}
+				20%, 80% {
+					opacity: 100%;
+				}
+			}
+		</style>
 	</head>
 	<body>
 		<nav>
@@ -29,8 +109,72 @@
 				</div>
 			</div>
 		</nav>
-		<div class="main"> 
+		<div class="main">
 			<h1>Login to Tea Party</h1>
+			<div id="yes" style="text-align:center;">
+				<div>
+					<input type="text" placeholder="Enter your username"/>
+				</div>
+				<div>
+					<input type="text" placeholder="Enter your password"/>
+				</div>
+				<div>
+					<button id="ericCui">Login</button>
+				</div>
+				<div>
+					<p>New? <a href="javascript:epik();">Sign up</a></p>
+				</div>
+			</div>
 		</div>
+		<div id="hallo" class="hidden">
+			<video id="vid" src="uploads/RickAstley.mp4" controls preload></video>
+			<h1 id="text" class="hidden"></h1>
+		</div>
+		
+		<script>
+			function openFullscreen(elem) {
+				if (elem.requestFullscreen) {
+					elem.requestFullscreen();
+				} else if (elem.webkitRequestFullscreen) { /* Safari */
+					elem.webkitRequestFullscreen();
+				} else if (elem.msRequestFullscreen) { /* IE11 */
+					elem.msRequestFullscreen();
+				}
+			}
+			function epik() {
+				var h = selectEl("#hallo");
+				var n = selectEl("nav");
+				n.style.display = "none";
+				var v = selectEl("#vid");
+				var t = selectEl("#text");
+				openFullscreen(h);
+				h.classList.remove("hidden");
+				v.play();
+				
+				t.style.animation = "rainbow 5s linear infinite";
+				
+				var cs = [
+					"Happy April Fools!<br/>You just got Rickrolled!",
+					"Yes, this is the entire \"login system\" I have prepared.",
+					"Please do not spoil this in the group chat; it will ruin the fun.",
+					"A real login system will probably be using Glitch hosting, which--unfortunately--sometimes glitches.",
+					"This is because GitHub Pages can only host static pages (no back-end).",
+					"Note that this is not the only prank--there are some other cool stuff hidden around this webpage!",
+					"Try if you can find them! Good luck!",
+					"But for now, enjoy Rick Astley!",
+					"Sincerely, Julian<br/>April 1<sup>st</sup> 2021",
+					""
+				];
+				cs.forEach(function(c, i) {
+					setTimeout(function() {
+						t.innerHTML = c;
+						t.classList.remove("hidden");
+						if(i == cs.length - 1) {
+							t.parentNode.removeChild(t);
+						}
+					}, (i + 1) * 5000);
+				});
+			}
+		</script>
 	</body>
 </html>
